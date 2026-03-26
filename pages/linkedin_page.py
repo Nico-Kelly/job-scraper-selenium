@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 
 
-class LinkedInFeedPage:
+class LinkedInFeedPage(BasePage):
 
     #URL
 
@@ -11,7 +11,7 @@ class LinkedInFeedPage:
 
     #LOCATOR
 
-    SEARCH_INPUT = ''
+    SEARCH_INPUT = (By.CSS_SELECTOR, '[data-testid="typeahead-input"]')
 
     #INTERACTION METHODS
 
@@ -22,4 +22,4 @@ class LinkedInFeedPage:
 
     def search(self, phrase):
         search_input = self.wait_visibility(self.SEARCH_INPUT)
-        search_input.send_kets(phrase + Keys.RETURN)
+        search_input.send_keys(phrase + Keys.RETURN)
