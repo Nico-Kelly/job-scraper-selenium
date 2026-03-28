@@ -12,7 +12,9 @@ class LinkedInLogInPage(BasePage):
 
     #LOCATOR
 
-    SEARCH_INPUT = ()
+    EMAIL_INPUT = (By.ID, "username")
+
+    PASSWORD_INPUT = (By.ID, "password")
 
     #INTERACTION METHODS
 
