@@ -16,6 +16,8 @@ class LinkedInLogInPage(BasePage):
 
     PASSWORD_INPUT = (By.ID, "password")
 
+    SIGN_IN_BUTTON = (By.CSS, "btn__primary--large from__button--floating")
+
     #INTERACTION METHODS
 
     def load(self):
