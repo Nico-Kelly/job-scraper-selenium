@@ -16,7 +16,7 @@ class LinkedInLogInPage(BasePage):
 
     PASSWORD_INPUT = (By.ID, "password")
 
-    SIGN_IN_BUTTON = (By.CSS_SELECTOR, ".btn__primary--large from__button--floating")
+    SIGN_IN_BUTTON = (By.CSS_SELECTOR, "button[type='submit']")
 
     #INTERACTION METHODS
 
@@ -30,8 +30,8 @@ class LinkedInLogInPage(BasePage):
         email_input.send_keys(mail)
 
     def password(self, password):
-        #TODO
-        pass
+        pass_input = self.wait_visibility(self.PASSWORD_INPUT)
+        pass_input.send_keys(password)
 
     def click_sign_in(self):
         sign = self.wait_visibility(self.SIGN_IN_BUTTON)
