@@ -26,12 +26,11 @@ class LinkedInLogInPage(BasePage):
 
 
     def email(self, mail):
-        email_input = self.wait_visibility(self.EMAIL_INPUT)
-        email_input.send_keys(mail)
+        self.type_text(self.EMAIL_INPUT,mail)
 
     def password(self, password):
-        pass_input = self.wait_visibility(self.PASSWORD_INPUT)
-        pass_input.send_keys(password)
+        self.type_text(self.PASSWORD_INPUT, password)
+
 
     def click_sign_in(self):
         sign = self.wait_visibility(self.SIGN_IN_BUTTON)
