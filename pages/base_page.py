@@ -15,3 +15,6 @@ class BasePage:
         return wait.until(EC.visibility_of_all_elements_located(locator))
     
 
+    def type_text(self, locator, text):
+        element = self.wait_visibility(locator)
+        element.send_keys(text)
