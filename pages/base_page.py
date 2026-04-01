@@ -18,3 +18,8 @@ class BasePage:
     def type_text(self, locator, text):
         element = self.wait_visibility(locator)
         element.send_keys(text)
+
+
+    def click_ec(self, locator):
+        click_ec = self.wait_visibility(locator)
+        click_ec.click()
