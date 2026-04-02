@@ -20,6 +20,7 @@ class BasePage:
         element.send_keys(text)
 
 
-    def click_ec(self, locator):
-        click_ec = self.wait_visibility(locator)
+    def click_element(self, locator, timeout = 10):
+        wait = WebDriverWait(self.browser, locator)
+        click_ec = wait.until(EC.element_to_be_clickable(locator))
         click_ec.click()

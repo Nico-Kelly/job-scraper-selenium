@@ -32,6 +32,7 @@ class LinkedInLogInPage(BasePage):
         self.type_text(self.PASSWORD_INPUT, password)
 
 
-    def click_sign_in(self):
-        sign = self.wait_visibility(self.SIGN_IN_BUTTON)
-        sign.click()
+    def click_sign_in(self,locator):
+        self.click_element = locator.click()
+        
+        
