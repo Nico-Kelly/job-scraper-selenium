@@ -21,5 +21,4 @@ class LinkedInFeedPage(BasePage):
 
 
     def search(self, phrase):
-        search_input = self.wait_visibility(self.SEARCH_INPUT)
-        search_input.send_keys(phrase + Keys.RETURN)
+        self.type_text(self.SEARCH_INPUT, phrase + Keys.RETURN)
