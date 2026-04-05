@@ -18,14 +18,14 @@ An automated web scraping bot designed to optimize the job hunting process. This
 To ensure long-term maintainability and scalability, this project strictly adheres to the **Page Object Model (POM)** design pattern. 
 
 Web UI changes frequently. By separating the web interaction logic from the business operations, the bot becomes resilient to DOM updates.
-- **Pages Layer:** Classes representing specific web pages (e.g., `LinkedInLoginPage`, `LinkedInPage`). They encapsulate all Selenium locators and web interactions.
+- **Pages Layer:** Classes representing specific web pages (e.g., `LinkedInLoginPage`, `LinkedInFeedPage`). They encapsulate all Selenium locators and web interactions.
 - **Services/Utils Layer:** Handles data processing, API interactions (like Google Sheets), and file management.
 - **Test/Execution Layer:** The orchestrator scripts that define the behavior flow without caring about the underlying HTML structure.
 
 ## ✨ Planned Features
 
 - [ ] **Automated Navigation:** Seamless login and search execution on target job boards.
-- [ ] **Dynamic Wait Handling:** Implementation of `WebDriverWait` (Explicit Waits) to handle slow-loading dynamic elements safely.
+- [x] **Dynamic Wait Handling:** Implementation of `WebDriverWait` (Explicit Waits) to handle slow-loading dynamic elements safely.
 - [ ] **Smart Filtering:** Keyword-based inclusion (e.g., "QA", "Automation", "Trainee") and exclusion (e.g., "Senior", "Lead") logic.
 - [ ] **Data Extraction:** Scraping critical data points: Job Title, Company, Location, Date, and Direct URL.
 - [ ] **Data Export:** Automated pipeline to push structured data directly into a Google Sheets CRM.
@@ -34,15 +34,23 @@ Web UI changes frequently. By separating the web interaction logic from the busi
 
 ```text
 📁 job_scraper
+├── 📁 .vscode/                # VS Code workspace settings
+│   └── settings.json
 ├── 📁 config/                 # Externalized configurations
-│   └── settings.json          # URLs, timeouts, and search parameters
 ├── 📁 pages/                  # Page Object classes (Selenium interactions)
+│   ├── __init__.py
 │   ├── base_page.py           # Common wrapper methods with Explicit Waits
-│   ├── linkedin_login_page.py # Locators and logic for authentication
-│   └── linkedin_page.py       # Locators and logic for job feed navigation
+│   ├── linkedin_feed_page.py  # Locators and logic for main feed navigation
+│   └── linkedin_login_page.py # Locators and logic for authentication
 ├── 📁 services/               # External integrations
+│   ├── __init__.py
 │   └── google_sheets.py       # Google Sheets API connection logic
 ├── 📁 utils/                  # Helper modules and data cleaners
+│   ├── __init__.py
+│   └── data_cleaner.py
 ├── .env                       # Environment variables (Gitignored secrets)
+├── .gitignore
+├── LICENSE
 ├── Pipfile                    # Virtual environment & dependencies
+├── Pipfile.lock               # Deterministic dependency resolution
 └── README.md                  # Documentation
