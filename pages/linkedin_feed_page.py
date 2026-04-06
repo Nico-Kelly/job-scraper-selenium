@@ -9,10 +9,10 @@ class LinkedInFeedPage(BasePage):
 
     URL = 'https://www.linkedin.com/feed/'
 
-    #LOCATOR
+    #LOCATORs
 
     SEARCH_INPUT = (By.CSS_SELECTOR, '[data-testid="typeahead-input"]')
-
+    JOBS_NAV_ICON = ()
     #INTERACTION METHODS
 
     def load(self):
@@ -28,5 +28,4 @@ class LinkedInFeedPage(BasePage):
         pass
     
     def go_to_jobs_section(self):
-        #TODO
-        pass
+        self.click_element(self.JOBS_NAV_ICON)
