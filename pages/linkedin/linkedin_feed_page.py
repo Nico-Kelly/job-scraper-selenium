@@ -16,7 +16,6 @@ class LinkedInFeedPage(BasePage):
     #INTERACTION METHODS
 
     def load(self):
-
         self.browser.get(self.URL)
 
 
