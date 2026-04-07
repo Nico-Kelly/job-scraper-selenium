@@ -12,7 +12,7 @@ class LinkedInFeedPage(BasePage):
     #LOCATORs
 
     SEARCH_INPUT = (By.CSS_SELECTOR, '[data-testid="typeahead-input"]')
-    JOBS_NAV_ICON = ()
+    JOBS_NAV_ICON = (By.CSS_SELECTOR, "a[href*='/jobs/']")
     #INTERACTION METHODS
 
     def load(self):
