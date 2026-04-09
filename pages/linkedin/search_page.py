@@ -18,13 +18,9 @@ class LinkedInFeedPage(BasePage):
     def load(self):
         self.browser.get(self.URL)
 
-
     def search(self, phrase):
         self.type_text(self.SEARCH_INPUT, phrase + Keys.RETURN)
 
-    def is_feed_loaded(self):
+    def is_search_page_loaded(self):
         #TODO
         pass
-    
-    def go_to_jobs_section(self):
-        self.click_element(self.JOBS_NAV_ICON)
