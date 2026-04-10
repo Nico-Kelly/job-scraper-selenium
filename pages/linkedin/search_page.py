@@ -28,8 +28,9 @@ class LinkedInJobSearchPage(BasePage):
     def load(self):
         self.browser.get(self.URL)
 
-    def search(self, phrase):
-        self.type_text(self.SEARCH_INPUT, phrase + Keys.RETURN)
+    def search(self):
+        self.type_text(self.KEYWORD_INPUT, self.keyword)
+        self.type_text(self.LOCATION_INPUT, self.location + Keys.RETURN)
 
     def is_search_page_loaded(self):
         #TODO
