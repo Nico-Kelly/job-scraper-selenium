@@ -1,14 +1,11 @@
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By 
+from selenium.webdriver.common.by import By
+from selenium.common.exceptions import TimeoutException
 from pages.base_page import BasePage
 import json
 
 class LinkedInJobSearchPage(BasePage):
-
-    #URL
-
-    URL = 'https://www.linkedin.com/jobs/'
-
+    
     #LOCATORs
 
     KEYWORD_INPUT = ()
@@ -33,5 +30,11 @@ class LinkedInJobSearchPage(BasePage):
         self.type_text(self.LOCATION_INPUT, self.location + Keys.RETURN)
 
     def is_search_page_loaded(self):
-        #TODO
-        pass
+        try:
+
+            self.wait_visibility(self.KEYWORD_INPUT, timeout=10)
+            return True
+        except TimeoutException:
+            return False
+        
+        
