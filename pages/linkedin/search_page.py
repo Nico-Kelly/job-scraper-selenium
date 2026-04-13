@@ -23,7 +23,7 @@ class LinkedInJobSearchPage(BasePage):
         self.location = self.config['search_params']['location']
 
     def load(self):
-        self.browser.get(self.URL)
+        self.browser.get(self.url)
 
     def search(self):
         self.type_text(self.KEYWORD_INPUT, self.keyword)
@@ -36,5 +36,4 @@ class LinkedInJobSearchPage(BasePage):
             return True
         except TimeoutException:
             return False
-        
         
