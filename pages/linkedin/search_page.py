@@ -8,8 +8,8 @@ class LinkedInJobSearchPage(BasePage):
     
     #LOCATORs
 
-    KEYWORD_INPUT = ()
-    LOCATION_INPUT = ()
+    KEYWORD_INPUT = (By.CSS_SELECTOR, 'input[componentkey="jobSearchBox"]')
+    LOCATION_INPUT = (By.CSS_SELECTOR, 'input[placeholder="Ciudad, provincia o código postal"]') # This will only work as long as it is in spanish so i should change it soon
     
     #INTERACTION METHODS
 
