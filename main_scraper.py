@@ -8,3 +8,17 @@ from selenium.webdriver.chrome.options import Options
 from pages.linkedin.login_page import LinkedInLogInPage
 from pages.linkedin.search_page import LinkedInJobSearchPage
 
+def check_enviroment():
+    #TODO
+    pass
+
+def setup_driver():
+    #TODO
+    pass
+
+def main():
+    #TODO
+    pass
+
+if __name__ == "__main__":
+    main()
