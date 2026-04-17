@@ -2,6 +2,7 @@ import os
 import sys
 import time
 from dotenv import load_dotenv
+from requests import options
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
@@ -22,11 +23,14 @@ def check_enviroment():
         sys.exit(1)
 
     print("All good.")
-    pass
 
 def setup_driver():
-    #TODO
-    pass
+    options = Options()
+    options.add_argument("--start-maximized")
+    options.add_argument("--disable-notifications")
+    options.add_argument("--headless")
+
+    return webdriver.Chrome(options=options)
 
 def main():
     #TODO
