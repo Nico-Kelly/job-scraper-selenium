@@ -14,11 +14,11 @@ def check_enviroment():
 
     load_dotenv()
 
-    if not os.getenv(LINKEDIN_EMAIL) or not os.getenv(LINKEDIN_PASSWORD):
+    if not os.getenv('LINKEDIN_EMAIL') or not os.getenv('LINKEDIN_PASSWORD'):
         print("Fatal error missing credentials")
         sys.exit(1)
 
-    if not os.path.exists(config/settings.json):
+    if not os.path.exists('config/settings.json'):
         print("Fatal error missing .env file")
         sys.exit(1)
 
