@@ -2,7 +2,6 @@ import os
 import sys
 import time
 from dotenv import load_dotenv
-from requests import options
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
