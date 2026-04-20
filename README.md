@@ -17,14 +17,14 @@ An automated web scraping bot designed to optimize the job hunting process. This
 
 To ensure long-term maintainability and scalability, this project strictly adheres to the **Page Object Model (POM)** design pattern. 
 
-Web UI changes frequently. By separating the web interaction logic from the business operations, the bot becomes resilient to DOM updates.
-- **Pages Layer:** Classes representing specific web pages (e.g., `LinkedInLoginPage`, `LinkedInFeedPage`). They encapsulate all Selenium locators and web interactions.
+Web UI changes frequently. By separating the web interaction logic from the business operations, the bot becomes resilient to DOM updates. Furthermore, pages are modularized by domain to support future multi-platform scaling.
+- **Pages Layer:** Classes representing specific web pages, grouped by target website (e.g., `linkedin.login_page`). They encapsulate all Selenium locators and web interactions.
 - **Services/Utils Layer:** Handles data processing, API interactions (like Google Sheets), and file management.
-- **Test/Execution Layer:** The orchestrator scripts that define the behavior flow without caring about the underlying HTML structure.
+- **Test/Execution Layer:** The orchestrator script (`main_scraper.py`) that defines the behavior flow without caring about the underlying HTML structure.
 
 ## ✨ Planned Features
 
-- [ ] **Automated Navigation:** Seamless login and search execution on target job boards.
+- [x] **Automated Navigation:** Seamless login and search execution on target job boards using UI By-pass for optimization.
 - [x] **Dynamic Wait Handling:** Implementation of `WebDriverWait` (Explicit Waits) to handle slow-loading dynamic elements safely.
 - [ ] **Smart Filtering:** Keyword-based inclusion (e.g., "QA", "Automation", "Trainee") and exclusion (e.g., "Senior", "Lead") logic.
 - [ ] **Data Extraction:** Scraping critical data points: Job Title, Company, Location, Date, and Direct URL.
@@ -35,22 +35,19 @@ Web UI changes frequently. By separating the web interaction logic from the busi
 ```text
 📁 job_scraper
 ├── 📁 .vscode/                # VS Code workspace settings
-│   └── settings.json
-├── 📁 config/                 # Externalized configurations
+├── 📁 config/                 # Externalized configurations (e.g., settings.json)
 ├── 📁 pages/                  # Page Object classes (Selenium interactions)
-│   ├── __init__.py
 │   ├── base_page.py           # Common wrapper methods with Explicit Waits
-│   ├── linkedin_feed_page.py  # Locators and logic for main feed navigation
-│   └── linkedin_login_page.py # Locators and logic for authentication
-├── 📁 services/               # External integrations
-│   ├── __init__.py
-│   └── google_sheets.py       # Google Sheets API connection logic
+│   └── 📁 linkedin/           # Sub-package for LinkedIn specific pages
+│       ├── __init__.py
+│       ├── login_page.py      # Locators and logic for authentication
+│       └── search_page.py     # Direct job search execution (UI By-pass)
+├── 📁 services/               # External integrations (Google Sheets API)
 ├── 📁 utils/                  # Helper modules and data cleaners
-│   ├── __init__.py
-│   └── data_cleaner.py
 ├── .env                       # Environment variables (Gitignored secrets)
 ├── .gitignore
 ├── LICENSE
+├── main_scraper.py            # Orquestrator and main entry point
 ├── Pipfile                    # Virtual environment & dependencies
 ├── Pipfile.lock               # Deterministic dependency resolution
 └── README.md                  # Documentation
