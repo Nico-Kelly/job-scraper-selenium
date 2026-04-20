@@ -32,8 +32,41 @@ def setup_driver():
     return webdriver.Chrome(options=options)
 
 def main():
-    #TODO
-    pass
+    check_enviroment()
+    print("Starting Selenium")
+    browser = setup_driver()
+
+    try:
+        login_page = LinkedInLogInPage(browser)
+        jobs_page = LinkedInJobSearchPage(browser)
+
+        print("Login in")
+        login_page.load()
+        login_page.email(os.getenv('LINKEDIN_EMAIL'))
+        login_page.password(os.getenv('LINKEDIN_PASSWORD'))
+        login_page.click_sign_in()
+
+        time.sleep(3)
+
+        print("Now loading jobs page")
+        jobs_page.load()
+        if jobs_page.is_search_page_loaded():
+            print("Success, searching for desired job")
+            jobs_page.search()
+            print("Completed! wait 5 seconds.")
+            time.sleep(5)
+        else:
+            print("Job page failed to open")
+
+    except Exception as e:
+        print(f"Unexpected error ocurred during: {e}")
+
+    finally:
+        print("Turning down bot. cleaning memory up.")
+        browser.quit()
+
+
+
 
 if __name__ == "__main__":
     main()
