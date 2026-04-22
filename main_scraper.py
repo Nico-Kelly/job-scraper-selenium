@@ -9,7 +9,13 @@ from pages.linkedin.login_page import LinkedInLogInPage
 from pages.linkedin.search_page import LinkedInJobSearchPage
 
 def check_enviroment():
-    print("validating json file")
+    """
+        Validates the presence of required environment variables and configuration files.
+        Exits the program immediately if any critical data (.env or settings.json) is missing,
+        preventing unnecessary browser initialization.
+        """
+
+    print("Validating environment and configurations...")
 
     load_dotenv()
 
@@ -24,6 +30,11 @@ def check_enviroment():
     print("All good.")
 
 def setup_driver():
+    """
+        Configures and initializes the Selenium Chrome WebDriver.
+        Sets up navigation rules such as maximizing the window and disabling notifications.
+    """
+
     options = Options()
     options.add_argument("--start-maximized")
     options.add_argument("--disable-notifications")
@@ -32,6 +43,14 @@ def setup_driver():
     return webdriver.Chrome(options=options)
 
 def main():
+    """
+        Main orchestrator function.
+        Handles the execution flow: Environment validation, WebDriver setup,
+        LinkedIn authentication, and executing the job search by-pass.
+        Ensures safe teardown of resources in the finally block.
+    """
+
+
     check_enviroment()
     print("Starting Selenium")
     browser = setup_driver()
