@@ -7,7 +7,7 @@ from selenium.webdriver.chrome.options import Options
 
 from pages.linkedin.login_page import LinkedInLogInPage
 from pages.linkedin.search_page import LinkedInJobSearchPage
-
+from config.waits import SHORT_WAIT, MEDIUM_WAIT
 def check_enviroment():
     """
         Validates the presence of required environment variables and configuration files.
@@ -65,7 +65,7 @@ def main():
         login_page.password(os.getenv('LINKEDIN_PASSWORD'))
         login_page.click_sign_in()
 
-        time.sleep(3)
+        time.sleep(SHORT_WAIT)
 
         print("Now loading jobs page")
         jobs_page.load()
@@ -73,7 +73,7 @@ def main():
             print("Success, searching for desired job")
             jobs_page.search()
             print("Completed! wait 5 seconds.")
-            time.sleep(5)
+            time.sleep(MEDIUM_WAIT)
         else:
             print("Job page failed to open")
 
