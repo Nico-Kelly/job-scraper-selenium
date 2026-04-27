@@ -1,8 +1,9 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from abc import ABC
 
-class BasePage:
-
+class BasePage(ABC):
+    
     def __init__(self, browser):
         self.browser = browser
 
@@ -21,6 +22,6 @@ class BasePage:
 
 
     def click_element(self, locator, timeout = 10):
-        wait = WebDriverWait(self.browser, locator)
+        wait = WebDriverWait(self.browser, timeout)
         click_ec = wait.until(EC.element_to_be_clickable(locator))
         click_ec.click()
