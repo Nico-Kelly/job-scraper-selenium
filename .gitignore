@@ -4,7 +4,7 @@ __pycache__/
 *.pyc
 
 .env
-config/settings.json
+
 
 # editor
 .vscode/

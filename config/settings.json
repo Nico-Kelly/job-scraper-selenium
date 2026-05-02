@@ -1,0 +1,18 @@
+{   
+
+    "driver_config": {
+        "browser": "chrome",
+        "headless_mode": false
+    },
+    "urls": {
+        "linkedin": "https://www.linkedin.com/jobs/search/",
+        "zonajobs": "https://www.zonajobs.com.ar/empleos.html"
+    },
+    "timeouts": {
+        "explicit_wait": 10
+    },
+    "search_params": {
+        "job_title": "QA Automation",
+        "location": "Pilar, Buenos Aires"
+    }
+}
