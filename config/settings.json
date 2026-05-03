@@ -1,5 +1,6 @@
-{   
-
+{
+    "export_destination": "csv",
+    "csv_filename": "linkedin.csv",
     "driver_config": {
         "browser": "chrome",
         "headless_mode": false
