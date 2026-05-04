@@ -1,5 +1,5 @@
 {
-    "export_destination": "csv",
+    "export_method": "csv",
     "csv_filename": "linkedin.csv",
     "driver_config": {
         "browser": "chrome",

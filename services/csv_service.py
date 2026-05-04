@@ -3,8 +3,10 @@ import os
 from utils.models import JobPosting
 
 class CSVService:
-    def __init__(self, filename: str):
-        self.filepath = os.path.join(os.getcwd(), filename)
+    def __init__(self, folder_name: str, filename: str):
+        self.folder_path = os.path.join(os.getcwd(), folder_name)
+        os.makedirs(self.folder_path, exist_ok= True)
+        self.filepath = os.path.join(self.folder_path, filename)
         self._ensure_file_exist()
 
     # Fijate cómo ahora están alineados a la izquierda, al nivel del __init__
