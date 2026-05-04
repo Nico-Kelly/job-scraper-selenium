@@ -1,13 +1,20 @@
 import os
 import sys
 import time
+import json
+
 from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-
 from pages.linkedin.login_page import LinkedInLogInPage
 from pages.linkedin.search_page import LinkedInJobSearchPage
-from config.waits import SHORT_WAIT, MEDIUM_WAIT
+
+
+with open('config/settings.json', 'r', encoding='utf-8') as f:
+    settings = json.load(f)
+
+
+    EXPLICIT_WAIT = settings['timeouts']['explicit_wait']
 def check_enviroment():
     """
         Validates the presence of required environment variables and configuration files.
@@ -65,7 +72,7 @@ def main():
         login_page.password(os.getenv('LINKEDIN_PASSWORD'))
         login_page.click_sign_in()
 
-        time.sleep(SHORT_WAIT)
+        time.sleep(EXPLICIT_WAIT)
 
         print("Now loading jobs page")
         jobs_page.load()
@@ -73,7 +80,7 @@ def main():
             print("Success, searching for desired job")
             jobs_page.search()
             print("Completed! wait 5 seconds.")
-            time.sleep(MEDIUM_WAIT)
+            time.sleep(EXPLICIT_WAIT)
         else:
             print("Job page failed to open")
 
