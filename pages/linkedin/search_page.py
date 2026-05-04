@@ -15,12 +15,13 @@ class LinkedInJobSearchPage(BasePage):
 
     def __init__(self, browser):
         super().__init__(browser)
-        with open('config/settings.json', 'r') as file:
+        with open('config/settings.json', 'r', encoding='utf-8') as file:
             self.config = json.load(file)
 
         self.url = self.config['urls']['linkedin']
         self.keyword = self.config['search_params']['job_title']
         self.location = self.config['search_params']['location']
+        self.timeout = self.config['timeouts']['explicit_wait']
 
     def load(self):
         self.browser.get(self.url)
@@ -32,7 +33,7 @@ class LinkedInJobSearchPage(BasePage):
     def is_search_page_loaded(self):
         try:
 
-            self.wait_visibility(self.KEYWORD_INPUT, timeout=10)
+            self.wait_visibility(self.KEYWORD_INPUT, timeout=self.timeout)
             return True
         except TimeoutException:
             return False
