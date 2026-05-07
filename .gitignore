@@ -8,3 +8,9 @@ __pycache__/
 
 # editor
 .vscode/
+
+
+# Logs
+logs/
+*.log
+
