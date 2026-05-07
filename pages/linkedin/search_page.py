@@ -14,10 +14,10 @@ class LinkedInJobSearchPage(BasePage):
     
     #---
 
-    JOB_CARD = (By.CSS_SELECTOR, 'TODO')
-    JOB_TITLE = (By.CSS_SELECTOR, 'TODO')
-    JOB_COMPANY = (By.CSS_SELECTOR, 'TODO')
-    JOB_LOCATION = (By.CSS_SELECTOR, 'TODO')
+    JOB_CARD = (By.CSS_SELECTOR, 'a[href*="/jobs/"]')
+    JOB_TITLE = (By.CSS_SELECTOR, 'div[data-display-contents="true"] p span:first-child')
+    JOB_COMPANY = (By.XPATH, './/div[p[contains(text(), "·")]]/p[1]')
+    JOB_LOCATION = (By.XPATH, './/div[p[contains(text(), "·")]]/p[3]')
 
 
     #INTERACTION METHODS
