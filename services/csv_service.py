@@ -21,7 +21,7 @@ class CSVService:
 
     def append_jobs(self, jobs_data: list[JobPosting]):
         if not jobs_data:
-            print("No jobs to append")
+            logger.info("no jobs to append")
             return
 
         try:
