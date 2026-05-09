@@ -1,7 +1,9 @@
 import csv
 import os
 from utils.models import JobPosting
+from utils.logger import get_logger
 
+logger = get_logger(__name__)
 class CSVService:
     def __init__(self, folder_name: str, filename: str):
         self.folder_path = os.path.join(os.getcwd(), folder_name)
@@ -9,9 +11,9 @@ class CSVService:
         self.filepath = os.path.join(self.folder_path, filename)
         self._ensure_file_exist()
 
-    # Fijate cómo ahora están alineados a la izquierda, al nivel del __init__
+
     def _ensure_file_exist(self):
-        # Corregido: exists con 's'
+
         if not os.path.exists(self.filepath):
             with open(self.filepath, mode='w', newline='', encoding='utf-8') as f:
                 writer = csv.writer(f)
@@ -22,9 +24,13 @@ class CSVService:
             print("No jobs to append")
             return
 
-        with open(self.filepath, mode='a', newline='', encoding='utf-8') as f:
-            writer = csv.writer(f)
-            for job in jobs_data:
-                writer.writerow([job.title, job.company, job.location, job.url])
+        try:
+            with open(self.filepath, mode='a', newline='', encoding='utf-8') as f:
+                writer = csv.writer(f)
+                for job in jobs_data:
+                    writer.writerow([job.title, job.company, job.location, job.url])
 
-        print(f"Successfully saved {len(jobs_data)} jobs to {self.filepath}")
+            logger.info(f"Succesfully saved {len(jobs_data)} jobs to {self.filepath}")
+
+        except PermissionError:
+            logger.error(f"Permission denied: Please close '{self.filepath}' if it's open")
