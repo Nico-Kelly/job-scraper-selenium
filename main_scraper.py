@@ -17,24 +17,24 @@ EXPLICIT_WAIT = settings['timeouts']['explicit_wait']
 
 logger = get_logger(__name__)
 
-def check_enviroment():
+def check_environment():
     """
     Validates the presence of required environment variables and configuration files.
     Exits the program immediately if any critical data (.env or settings.json) is missing,
     preventing unnecessary browser initialization.
     """
-    print("Validating environment and configurations...")
+    logger.info("Validating environment and configurations...")
     load_dotenv()
 
     if not os.getenv('LINKEDIN_EMAIL') or not os.getenv('LINKEDIN_PASSWORD'):
-        print("Fatal error: missing credentials")
+        logger.critical("Fatal error: missing credentials")
         sys.exit(1)
 
     if not os.path.exists('config/settings.json'):
-        print("Fatal error: missing .json file")
+        logger.critical("Fatal error: missing .json file")
         sys.exit(1)
 
-    print("All good.")
+    logger.info("All good.")
 
 def setup_driver():
     """
@@ -55,8 +55,8 @@ def main():
     LinkedIn authentication, and executing the job search by-pass.
     Ensures safe teardown of resources in the finally block.
     """
-    check_enviroment()
-    print("Starting Selenium")
+    check_environment()
+    logger.info("Starting Selenium")
     browser = setup_driver()
 
     logger.info("Initializing storage services...")
@@ -68,29 +68,33 @@ def main():
         login_page = LinkedInLogInPage(browser)
         jobs_page = LinkedInJobSearchPage(browser)
 
-        print("Logging in")
+        logger.info("Attempting login sequence")
         login_page.load()
         login_page.email(os.getenv('LINKEDIN_EMAIL'))
         login_page.password(os.getenv('LINKEDIN_PASSWORD'))
         login_page.click_sign_in()
 
+        logger.info("Now loading jobs page")
 
-        print("Now loading jobs page")
         jobs_page.load()
         
     
         if jobs_page.is_search_page_loaded():
-            print("Success, searching for desired job")
+            logger.info("Success, searching for desired job")
             jobs_page.search()
-            print("Search sequence completed!")
+            logger.info("Search sequence completed!")
+
+            extracted_jobs = jobs_page.extract_job_cards()
+            csv_service.append_jobs(extracted_jobs)
+
         else:
-            print("Job page failed to open")
+            logger.error("Job page failed to open")
 
     except Exception as e:
-        print(f"Unexpected error occurred during execution: {e}")
+        logger.exception(f"Unexpected error occurred during execution: {e}")
 
     finally:
-        print("Turning down bot. Cleaning memory up.")
+        logger.info("Turning down bot. Cleaning memory up.")
         browser.quit()
 
 if __name__ == "__main__":
