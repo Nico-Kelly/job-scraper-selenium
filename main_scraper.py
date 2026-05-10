@@ -7,11 +7,15 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from pages.linkedin.login_page import LinkedInLogInPage
 from pages.linkedin.search_page import LinkedInJobSearchPage
+from services.csv_service import CSVService
+from utils.logger import get_logger
 
 with open('config/settings.json', 'r', encoding='utf-8') as f:
     settings = json.load(f)
 
 EXPLICIT_WAIT = settings['timeouts']['explicit_wait']
+
+logger = get_logger(__name__)
 
 def check_enviroment():
     """
@@ -55,6 +59,11 @@ def main():
     print("Starting Selenium")
     browser = setup_driver()
 
+    logger.info("Initializing storage services...")
+    export_folder = settings.get('export_folder', 'data_exports')
+    csv_file = settings.get('csv_filename', 'ofertas_linkedin.csv')
+    csv_service = CSVService(export_folder, csv_file)
+    
     try:
         login_page = LinkedInLogInPage(browser)
         jobs_page = LinkedInJobSearchPage(browser)
