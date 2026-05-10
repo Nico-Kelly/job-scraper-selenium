@@ -33,6 +33,6 @@ class LinkedInLogInPage(BasePage):
 
 
     def click_sign_in(self):
-        self.click_element(self.SIGN_IN_BUTTON.click())
+        self.click_element(self.SIGN_IN_BUTTON)
         
         
