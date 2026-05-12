@@ -37,7 +37,6 @@ Web UI changes frequently. By separating the web interaction logic from the busi
 
 ```text
 📁 job_scraper
-├── 📁 .vscode/                # VS Code workspace settings
 ├── 📁 config/                 # Externalized configurations (e.g., settings.json)
 ├── 📁 pages/                  # Page Object classes (Selenium interactions)
 │   ├── base_page.py           # Common wrapper methods with Explicit Waits
@@ -54,7 +53,6 @@ Web UI changes frequently. By separating the web interaction logic from the busi
 │   ├── data_cleaner.py        # Static methods for text sanitation
 │   ├── logger.py              # Custom execution logger
 │   └── models.py              # Data structures (JobPosting Dataclass)
-├── .env                       # Environment variables (Gitignored secrets)
 ├── .gitignore
 ├── LICENSE
 ├── main_scraper.py            # Orchestrator and main entry point
