@@ -3,7 +3,10 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
 from pages.base_page import BasePage
 from utils.models import JobPosting
+from utils.logger import get_logger
 import json
+
+logger = get_logger(__name__)
 
 class LinkedInJobSearchPage(BasePage):
     
@@ -42,7 +45,6 @@ class LinkedInJobSearchPage(BasePage):
 
     def is_search_page_loaded(self):
         try:
-
             self.wait_visibility(self.KEYWORD_INPUT, timeout=self.timeout)
             return True
         except TimeoutException:
@@ -69,9 +71,10 @@ class LinkedInJobSearchPage(BasePage):
                     extracted_jobs.append(job)
 
                 except Exception as e:
-                    print(f"Skipping a card due to missing data: {e}")
+                    logger.warning(f"Skipping a card due to missing data: {e}")
                     continue
+                    
         except TimeoutException:
-            print("No job cards found. The search might have yielded zero results or the page didn't load.")
+            logger.error("No job cards found. The search might have yielded zero results or the page didn't load.")
     
-        return extracted_jobs 
+        return extracted_jobs
