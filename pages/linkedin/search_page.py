@@ -53,17 +53,12 @@ class LinkedInJobSearchPage(BasePage):
         extracted_jobs = []
 
         try:
-
             self.wait_visibility(self.JOB_CARD, timeout=self.timeout)
-
             cards = self.browser.find_elements(*self.JOB_CARD)
 
-
-            # iteraterion over cards to extract data
-
+            # iteration over cards to extract data
             for card in cards:
                 try:
-
                     title = card.find_element(*self.JOB_TITLE).text
                     company = card.find_element(*self.JOB_COMPANY).text
                     location = card.find_element(*self.JOB_LOCATION).text
@@ -73,12 +68,10 @@ class LinkedInJobSearchPage(BasePage):
                     job = JobPosting(title=title, company=company, location=location, url=url)
                     extracted_jobs.append(job)
 
-
                 except Exception as e:
                     print(f"Skipping a card due to missing data: {e}")
                     continue
         except TimeoutException:
-            print("No job cards found. The search migh have yielded zero results or the page didn't load.")
+            print("No job cards found. The search might have yielded zero results or the page didn't load.")
     
-        return extracted_jobs
-    
+        return extracted_jobs 
