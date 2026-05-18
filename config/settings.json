@@ -7,7 +7,7 @@
     },
     "urls": {
         "linkedin": "https://www.linkedin.com/jobs/search/",
-        "zonajobs": "https://www.zonajobs.com.ar/empleos.html"
+        "computrabajo": "https://ar.computrabajo.com/empleos-en-pilar"
     },
     "timeouts": {
         "explicit_wait": 10
