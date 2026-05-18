@@ -5,6 +5,7 @@ from pages.base_page import BasePage
 from utils.models import JobPosting
 from utils.logger import get_logger
 import json
+import time
 
 logger = get_logger(__name__)
 
@@ -51,10 +52,39 @@ class LinkedInJobSearchPage(BasePage):
             return False
         
 
+    def scroll_results_panel(self):
+
+        try:
+
+            panel = self.wait_visibility(self.JOB_LIST_PANEL, timeout=self.timeout)
+            
+
+            last_height= self.browser.execute_script("return arguments[0].scrollHeight", panel)
+
+            while True:
+                self.browser.execute_script("arguments[0].scrollTop = arguments[0].scrollHeigth", panel)
+
+                time.sleep(1.5)
+
+                new_height = self.browser.execute_script("return arguments[0].scrollHeight", panel)
+
+                if new_height == last_height:
+                    break
+                last_height = new_height
+            
+            logger.info("Scroll completed.")
+
+        except TimeoutException:
+            logger.error("Scroll failed :c ")
+
     def extract_job_cards(self):
         extracted_jobs = []
 
         try:
+
+            self.scroll_results_panel() # handle lazy loading
+
+            
             self.wait_visibility(self.JOB_CARD, timeout=self.timeout)
             cards = self.browser.find_elements(*self.JOB_CARD)
 
