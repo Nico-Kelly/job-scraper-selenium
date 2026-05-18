@@ -62,7 +62,7 @@ class LinkedInJobSearchPage(BasePage):
             last_height= self.browser.execute_script("return arguments[0].scrollHeight", panel)
 
             while True:
-                self.browser.execute_script("arguments[0].scrollTop = arguments[0].scrollHeigth", panel)
+                self.browser.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", panel)
 
                 time.sleep(1.5)
 
@@ -84,7 +84,7 @@ class LinkedInJobSearchPage(BasePage):
 
             self.scroll_results_panel() # handle lazy loading
 
-            
+
             self.wait_visibility(self.JOB_CARD, timeout=self.timeout)
             cards = self.browser.find_elements(*self.JOB_CARD)
 
