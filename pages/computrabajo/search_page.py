@@ -13,7 +13,7 @@ class ComputrabajoSearchPage(BasePage):
         with open('config/settings.json', 'r', encoding='utf-8') as file:
             self.config = json.load(file)
 
-        self.url = self.config['urls']['computabrajo']
+        self.url = self.config['urls']['computrabajo']
         self.keyword = self.config['search_params']['job_title']
         self.location = self.config['search_params']['location']
         self.timeout = self.config['timeouts']['explicit_wait']
