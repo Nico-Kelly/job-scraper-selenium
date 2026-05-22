@@ -1,6 +1,6 @@
 {
     "export_method": "csv",
-    "csv_filename": "linkedin.csv",
+    "csv_filename": "scraped_jobs.csv",
     "driver_config": {
         "browser": "chrome",
         "headless_mode": false

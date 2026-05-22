@@ -61,7 +61,7 @@ def main():
 
     logger.info("Initializing storage services...")
     export_folder = settings.get('export_folder', 'data_exports')
-    csv_file = settings.get('csv_filename', 'ofertas_linkedin.csv')
+    csv_file = settings.get('csv_filename', 'scraped_jobs.csv')
     csv_service = CSVService(export_folder, csv_file)
     
     try:
