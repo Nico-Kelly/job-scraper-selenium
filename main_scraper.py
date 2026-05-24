@@ -7,6 +7,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from pages.linkedin.login_page import LinkedInLogInPage
 from pages.linkedin.search_page import LinkedInJobSearchPage
+from pages.computrabajo.search_page import ComputrabajoSearchPage
 from services.csv_service import CSVService
 from utils.logger import get_logger
 
@@ -63,33 +64,43 @@ def main():
     export_folder = settings.get('export_folder', 'data_exports')
     csv_file = settings.get('csv_filename', 'scraped_jobs.csv')
     csv_service = CSVService(export_folder, csv_file)
+
+    target_portal = settings.get('target_portal', 'linkedin')
     
     try:
-        login_page = LinkedInLogInPage(browser)
-        jobs_page = LinkedInJobSearchPage(browser)
+        if target_portal == 'linkedin':
+            login_page = LinkedInLogInPage(browser)
+            jobs_page = LinkedInJobSearchPage(browser)
 
-        logger.info("Attempting login sequence")
-        login_page.load()
-        login_page.email(os.getenv('LINKEDIN_EMAIL'))
-        login_page.password(os.getenv('LINKEDIN_PASSWORD'))
-        login_page.click_sign_in()
+            logger.info("Attempting login sequence")
+            login_page.load()
+            login_page.email(os.getenv('LINKEDIN_EMAIL'))
+            login_page.password(os.getenv('LINKEDIN_PASSWORD'))
+            login_page.click_sign_in()
 
-        logger.info("Now loading jobs page")
+            logger.info("Now loading jobs page")
 
-        jobs_page.load()
+            jobs_page.load()
         
     
-        if jobs_page.is_search_page_loaded():
-            logger.info("Success, searching for desired job")
-            jobs_page.search()
-            logger.info("Search sequence completed!")
+            if jobs_page.is_search_page_loaded():
+                logger.info("Success, searching for desired job")
+                jobs_page.search()
+                logger.info("Search sequence completed!")
 
-            extracted_jobs = jobs_page.extract_job_cards()
-            csv_service.append_jobs(extracted_jobs)
+                extracted_jobs = jobs_page.extract_job_cards()
+                csv_service.append_jobs(extracted_jobs)
+
+            else:
+                logger.error("Job page failed to open")
+        elif target_portal == 'computrabajo':
+            jobs_page = ComputrabajoSearchPage(browser)
+            logger.info("Loading Computrabajo jobs page")
+            jobs_page.load()
+            logger.info("Computrabajo loaded")
 
         else:
-            logger.error("Job page failed to open")
-
+            logger.error(f"Portal '{target_portal} is not supported yet :)'")
     except Exception as e:
         logger.exception(f"Unexpected error occurred during execution: {e}")
 

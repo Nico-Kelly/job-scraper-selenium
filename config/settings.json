@@ -1,4 +1,5 @@
 {
+    "target_portal": "linkedin",
     "export_method": "csv",
     "csv_filename": "scraped_jobs.csv",
     "driver_config": {
