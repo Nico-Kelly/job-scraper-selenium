@@ -37,7 +37,7 @@ def check_environment():
 
     logger.info("All good.")
 
-def setup_driver():
+def setup_driver(driver_config):
     """
     Configures and initializes the Selenium Chrome WebDriver.
     Sets up navigation rules such as maximizing the window and disabling notifications.
@@ -46,6 +46,19 @@ def setup_driver():
     options.add_argument("--start-maximized")
     options.add_argument("--disable-notifications")
     # options.add_argument("--headless")
+
+    # --- ANTI-BOT MEASURES ---
+    # Removes the "Chrome is being controlled by automated software" banner
+    options.add_experimental_option("excludeSwitches", ["enable-automation"])
+    options.add_experimental_option('useAutomationExtension', False)
+    # Disables internal blink features that reveal Selenium
+    options.add_argument('--disable-blink-features=AutomationControlled')
+    # Use a standard user-agent to look like a normal user
+    options.add_argument(
+        "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
+    if driver_config.get('headless_mode', False):
+        logger.info("Headless mode is ENABLED")
+        options.add_argument("--headless=new")  # Modern headless mode for Chrome
 
     return webdriver.Chrome(options=options)
 
@@ -58,7 +71,9 @@ def main():
     """
     check_environment()
     logger.info("Starting Selenium")
-    browser = setup_driver()
+
+    driver_config = settings.get('driver_config', {})
+    browser = setup_driver(driver_config)
 
     logger.info("Initializing storage services...")
     export_folder = settings.get('export_folder', 'data_exports')
