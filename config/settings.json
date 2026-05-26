@@ -8,7 +8,7 @@
     },
     "urls": {
         "linkedin": "https://www.linkedin.com/jobs/search/",
-        "computrabajo": "https://ar.computrabajo.com/empleos-en-pilar"
+        "computrabajo": "https://ar.computrabajo.com/"
     },
     "timeouts": {
         "explicit_wait": 10
