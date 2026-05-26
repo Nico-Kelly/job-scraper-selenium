@@ -10,9 +10,8 @@ logger = get_logger(__name__)
 class ComputrabajoSearchPage(BasePage):
     
     # LOCATORS
-    KEYWORD_INPUT = (By.CSS_SELECTOR, '#search-job-input-placeholder') 
-    LOCATION_INPUT = (By.CSS_SELECTOR, '#search-location-input-placeholder')
-    JOB_CARD = (By.CSS_SELECTOR, '.job-card-placeholder')
+    KEYWORD_INPUT = (By.ID, 'prof-cat-search-input') 
+    LOCATION_INPUT = (By.ID, 'place-search-input')
 
     def __init__(self, browser):
         super().__init__(browser)
@@ -30,7 +29,7 @@ class ComputrabajoSearchPage(BasePage):
 
 
     def search(self):
-        logger.info("Initiatin search sequence on Computrabajo")
+        logger.info("Initiating search sequence on Computrabajo")
         try:
             self.wait_visibility(self.KEYWORD_INPUT, timeout=self.timeout)
             self.type_text(self.KEYWORD_INPUT, self.keyword)
