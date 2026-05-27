@@ -8,6 +8,7 @@ from selenium.webdriver.chrome.options import Options
 from pages.linkedin.login_page import LinkedInLogInPage
 from pages.linkedin.search_page import LinkedInJobSearchPage
 from pages.computrabajo.search_page import ComputrabajoSearchPage
+from pages.computrabajo.results_page import ComputrabajoResultsPage
 from services.csv_service import CSVService
 from utils.logger import get_logger
 
@@ -108,11 +109,20 @@ def main():
 
             else:
                 logger.error("Job page failed to open")
+
         elif target_portal == 'computrabajo':
-            jobs_page = ComputrabajoSearchPage(browser)
+            
+            search_page = ComputrabajoSearchPage(browser)
+            results_page = ComputrabajoResultsPage(browser)
+
             logger.info("Loading Computrabajo jobs page")
-            jobs_page.load()
-            logger.info("Computrabajo loaded")
+            search_page.load()
+            search_page.search()
+
+            logger.info("Search executed, passing control to Results page")
+            extracted_jobs = results_page.extract_job_cards()
+            csv_service.append_jobs(extracted_jobs)
+
 
         else:
             logger.error(f"Portal '{target_portal} is not supported yet :)'")
