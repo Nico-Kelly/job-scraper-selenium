@@ -2,6 +2,7 @@
     "target_portal": "linkedin",
     "export_method": "csv",
     "csv_filename": "scraped_jobs.csv",
+    "max_pages":3,
     "driver_config": {
         "browser": "chrome",
         "headless_mode": false
