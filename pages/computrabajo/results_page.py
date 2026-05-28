@@ -4,6 +4,7 @@ from pages.base_page import BasePage
 from utils.models import JobPosting
 from utils.logger import get_logger
 import json
+import time
 
 logger = get_logger(__name__)
 
@@ -16,38 +17,64 @@ class ComputrabajoResultsPage(BasePage):
     JOB_COMPANY = (By.CSS_SELECTOR, '.company-placeholder')
     JOB_LOCATION = (By.CSS_SELECTOR, '.location-placeholder')
 
+    #pagination locators
+    NEXT_BUTTON = (By.CSS_SELECTOR, '.next-button-placeholder')
+
     def __init__(self, browser):
         super().__init__(browser)
         with open('config/settings.json', 'r', encoding='utf-8') as file:
             self.config = json.load(file)
         self.timeout = self.config['timeouts']['explicit_wait']
+        self.max_pages = self.config.get('max_pages', 1)
 
-    
+
     def extract_job_cards(self):
 
         logger.info("Starting extraction of job cards from Computrabajo Results Page")
-
         extracted_jobs = []
+        current_page = 1
 
-        try:
-            self.wait_visibility(self.JOB_CARD, timeout=self.timeout)
-            cards = self.browser.find_elements(*self.JOB_CARD)
+        while current_page <= self.max_pages:
+            logger.info(f"---Scraping page {current_page} of {self.max_pages}")
 
-            logger.info(f"Found {len(cards)} job cards. Extracting data..")
+            try:
+                self.wait_visibility(self.JOB_CARD, timeout=self.timeout)
+                cards = self.browser.find_elements(*self.JOB_CARD)
+                logger.info(f"Found {len(cards)} job cards on page {current_page} Extracting data..")
 
-            for card in cards:
+                for card in cards:
+                    try:
+                        title = card.find_element(*self.JOB_TITLE).text
+                        company = card.find_element(*self.JOB_COMPANY).text
+                        location = card.find_element(*self.JOB_LOCATION).text
+                        url = card.find_element(*self.JOB_TITLE).get_attribute('href')
+
+                        job = JobPosting(title=title, company=company, location=location, url=url)
+                        extracted_jobs.append(job)
+
+                    except Exception as e:
+                        logger.warning(f"Skipping a Computrabajo card due to missing data: {e}")
+                        continue
+            except TimeoutException:
+                logger.error("No job cards found. The search might have yielded zero results or locators are wrong")
+                break
+
+
+
+            if current_page < self.max_pages:
+
                 try:
-                    title = card.find_element(*self.JOB_TITLE).text
-                    company = card.find_element(*self.JOB_COMPANY).text
-                    location = card.find_element(*self.JOB_LOCATION).text
-                    url = card.find_element(*self.JOB_TITLE).get_attribute('href')
+                    logger.info("Looking for the 'next' button to turn page...")
+                    next_btn = self.wait_visibility(self.NEXT_BUTTON, timeout= self.timeout)
+                    next_btn.click()
+                    time.sleep(2)
+                except TimeoutException:
+                    logger.info("No 'Next' button found. Reached the las page of the results")
+                    break
+                current_page += 1
 
-                    job = JobPosting(title=title, company=company, location=location, url=url)
-                    extracted_jobs.append(job)
+            logger.info(f"Extraction completed. total jobs scraped: {len(extracted_jobs)}")
+            return extracted_jobs
 
-                except Exception as e:
-                    logger.warning(f"Skipping a Computrabajo card due to missing data: {e}")
-                    continue
-        except TimeoutException:
-            logger.error("No job cards found. The search might have yielded zero results or locators are wrong")
-        return extracted_jobs
+
+
