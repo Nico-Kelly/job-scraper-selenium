@@ -12,13 +12,13 @@ class ComputrabajoResultsPage(BasePage):
 
     #locators
 
-    JOB_CARD = (By.By.CSS_SELECTOR, '.box_offer.sel')
-    JOB_TITLE = (By.By.CSS_SELECTOR, '.js-o-link.fc_base')
-    JOB_COMPANY = (By.By.CSS_SELECTOR, '.fc_base.t_ellipsis')
-    JOB_LOCATION = (By.By.CSS_SELECTOR, 'mr10')
+    JOB_CARD = (By.CSS_SELECTOR, '.box_offer.sel')
+    JOB_TITLE = (By.CSS_SELECTOR, '.js-o-link.fc_base')
+    JOB_COMPANY = (By.CSS_SELECTOR, '.fc_base.t_ellipsis')
+    JOB_LOCATION = (By.CSS_SELECTOR, '.mr10')
 
     #pagination locators
-    NEXT_BUTTON = (By.CSS_SELECTOR, 'b_primary.w48.buildLink.cp')
+    NEXT_BUTTON = (By.CSS_SELECTOR, '.b_primary.w48.buildLink.cp')
 
     def __init__(self, browser):
         super().__init__(browser)
@@ -71,9 +71,9 @@ class ComputrabajoResultsPage(BasePage):
                 except TimeoutException:
                     logger.info("No 'Next' button found. Reached the las page of the results")
                     break
-                current_page += 1
+            current_page += 1
 
-            logger.info(f"Extraction completed. total jobs scraped: {len(extracted_jobs)}")
+        logger.info(f"Extraction completed. total jobs scraped: {len(extracted_jobs)}")
         return extracted_jobs
 
 
