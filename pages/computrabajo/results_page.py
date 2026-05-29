@@ -12,13 +12,13 @@ class ComputrabajoResultsPage(BasePage):
 
     #locators
 
-    JOB_CARD = (By.CSS_SELECTOR, '.job-card-placeholder')
-    JOB_TITLE = (By.CSS_SELECTOR, '.title-placeholder')
-    JOB_COMPANY = (By.CSS_SELECTOR, '.company-placeholder')
-    JOB_LOCATION = (By.CSS_SELECTOR, '.location-placeholder')
+    JOB_CARD = (By.By.CSS_SELECTOR, '.box_offer.sel')
+    JOB_TITLE = (By.By.CSS_SELECTOR, '.js-o-link.fc_base')
+    JOB_COMPANY = (By.By.CSS_SELECTOR, '.fc_base.t_ellipsis')
+    JOB_LOCATION = (By.By.CSS_SELECTOR, 'mr10')
 
     #pagination locators
-    NEXT_BUTTON = (By.CSS_SELECTOR, '.next-button-placeholder')
+    NEXT_BUTTON = (By.CSS_SELECTOR, 'b_primary.w48.buildLink.cp')
 
     def __init__(self, browser):
         super().__init__(browser)
@@ -74,7 +74,7 @@ class ComputrabajoResultsPage(BasePage):
                 current_page += 1
 
             logger.info(f"Extraction completed. total jobs scraped: {len(extracted_jobs)}")
-            return extracted_jobs
+        return extracted_jobs
 
 
 
