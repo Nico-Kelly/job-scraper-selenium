@@ -46,7 +46,6 @@ def setup_driver(driver_config):
     options = Options()
     options.add_argument("--start-maximized")
     options.add_argument("--disable-notifications")
-    # options.add_argument("--headless")
 
     # --- ANTI-BOT MEASURES ---
     # Removes the "Chrome is being controlled by automated software" banner
@@ -135,3 +134,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+    
