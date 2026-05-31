@@ -3,6 +3,7 @@ from selenium.common.exceptions import TimeoutException
 from pages.base_page import BasePage
 from utils.models import JobPosting
 from utils.logger import get_logger
+from typing import List
 import json
 import time
 
@@ -28,7 +29,7 @@ class ComputrabajoResultsPage(BasePage):
         self.max_pages = self.config.get('max_pages', 1)
 
 
-    def extract_job_cards(self):
+    def extract_job_cards(self) -> List[JobPosting]:
 
         logger.info("Starting extraction of job cards from Computrabajo Results Page")
         extracted_jobs = []
