@@ -30,7 +30,14 @@ class CSVService:
                 for job in jobs_data:
                     writer.writerow([job.title, job.company, job.location, job.url])
 
-            logger.info(f"Succesfully saved {len(jobs_data)} jobs to {self.filepath}")
+            logger.info(f"Successfully saved {len(jobs_data)} jobs to {self.filepath}")
 
         except PermissionError:
-            logger.error(f"Permission denied: Please close '{self.filepath}' if it's open")
+            fallback_filepath = self.filepath.replace('.csv', '_backup.csv')
+            logger.error(f"'{self.filepath}' is currently opened. Saving in backup file at {fallback_filepath}")
+
+            with open(fallback_filepath, mode= 'a', newline='', encoding='utf-8') as backup_file:
+                writer = csv.writer(backup_file)
+                for job in jobs_data:
+                    writer.writerow([job.title, job.company, job.location, job.url])
+                logger.info(f"Successfully saved {len(jobs_data)} jobs to {fallback_filepath}")
