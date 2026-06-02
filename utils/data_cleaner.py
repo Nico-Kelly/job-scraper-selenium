@@ -21,4 +21,4 @@ class DataCleaner:
         name = raw_company_text.split('·')[0]
         name = name.split('\n')[0]
 
-        return DataCleaner.clean_text(raw_company_text)
+        return DataCleaner.clean_text(name)
