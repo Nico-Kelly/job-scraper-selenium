@@ -3,7 +3,7 @@
 ![Python](https://img.shields.io/badge/Python-3.x-blue?style=flat&logo=python)
 ![Selenium](https://img.shields.io/badge/Selenium-Web_Scraping-43B02A?style=flat&logo=selenium)
 ![Architecture](https://img.shields.io/badge/Architecture-POM-purple)
-![Status](https://img.shields.io/badge/Status-Work_In_Progress-yellow)
+![Status](https://img.shields.io/badge/Status-MVP_Completed-success)
 
 An automated web scraping bot designed to optimize the job hunting process. This project extracts, filters, and organizes job postings (specifically targeting QA Automation and Python Developer roles) from major job boards, saving manual search time and accelerating application rates.
 
@@ -41,7 +41,7 @@ Web UI changes frequently. By separating the web interaction logic from the busi
 ├── 📁 config/                 # Externalized configurations (e.g., settings.json)
 ├── 📁 pages/                  # Page Object classes (Selenium interactions)
 │   ├── base_page.py           # Common wrapper methods with Explicit Waits
-│   ├── 📁 computrabajo/       # Locators and logic for Computrabajo (WIP)
+│   ├── 📁 computrabajo/       # Locators and logic for Computrabajo (MVP Ready)
 │   └── 📁 linkedin/           # Locators and logic for LinkedIn
 ├── 📁 services/               # Output operations
 │   ├── csv_service.py         # Handles CSV creation and appending
@@ -52,5 +52,7 @@ Web UI changes frequently. By separating the web interaction logic from the busi
 │   └── models.py              # Data structures (JobPosting Dataclass)
 ├── .env.example               # Template for required environment variables
 ├── .gitignore
+├── Pipfile                    # Pipenv dependencies and Python version
+├── Pipfile.lock               # Deterministic builds and dependency resolution
 ├── main_scraper.py            # Orchestrator and main entry point
 └── README.md                  # Documentation
